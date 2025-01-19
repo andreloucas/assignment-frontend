@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Resources</title>
+    <h1>Resources List:</h1>
+    <style>
+        .student-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .student-details {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            border: 1px solid #ddd;
+            padding: 5px;
+        }
+        .delete-button-container {
+            margin-left: 10px;
+        }
+
+        .buttons {
+            padding: 5px 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>File Name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="resource : ${resources}">
+        <td th:text="${resource.id}"></td>
+        <td th:text="${resource.name}"></td>
+        <td th:text="${resource.fileName}"></td>
+        <td>
+            <form th:action="@{/deleteResource/{resourceId}(resourceId=${resource.id})}" method="post">
+                <button class="buttons" type="submit">Delete</button>
+            </form>
+            <button class="buttons"
+                    th:onclick="'location.href=\'' + @{/updateResource/{resourceId}(resourceId=${resource.id})} + '\''">
+                Update
+            </button>
+            <button class="buttons"
+                    th:onclick="'location.href=\'' + @{/revisions/resource/{resourceId}(resourceId=${resource.id})} + '\''">
+                Revision of resource
+            </button>
+</table>
+<button class="buttons" th:onclick="'location.href=\'' + @{/resource} + '\''">Create new resource</button>
+<button class="buttons" th:onclick="'location.href=\'' + @{/revisions} + '\''">View all Revisions</button>
+<button type="button" class="buttons" th:onclick="'location.href=\'' + @{/emailForm} + '\''">Send Email</button>
+<button type="button" class="buttons" onclick="location.href='/emails'">Emails List</button>
+</body>
+</html>

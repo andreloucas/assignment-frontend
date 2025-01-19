@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Resource</title>
+    <style>
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div th:if="${message}" class="alert">
+    <span th:text="${message}"></span>
+</div>
+
+<h1>Create a Resource</h1>
+
+<form th:action="@{/resource}" th:object="${resource}" enctype="multipart/form-data" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}"><br><br>
+
+    <input type="file" name="file" th:field="*{file}"><br><br>
+
+    <button type="submit">Create Resource</button>
+</form>
+</body>
+</html>

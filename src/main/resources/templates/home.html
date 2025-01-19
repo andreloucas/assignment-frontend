@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-size: cover;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #f2f2f2;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .menu button {
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu button:hover {
+            background-color: #0056b3;
+        }
+
+        .menu-icon {
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            fill: white;
+            margin-bottom: 20px;
+        }
+
+        .menu-icon svg {
+            display: block;
+            margin: 0 auto;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Menu Icon -->
+    <div class="menu-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+            <path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path>
+        </svg>
+    </div>
+
+    <!-- Header -->
+    <h1>Welcome to the Resources Management System</h1>
+
+    <!-- Menu Choices -->
+    <div class="menu">
+        <button onclick="location.href='/resources'">Resources List</button>
+        <button onclick="location.href='/resource'">Create a Resource</button>
+        <button onclick="location.href='/revisions'">View Revisions</button>
+        <button onclick="location.href='/emails'">Emails List</button>
+        <button onclick="location.href='/emailForm'">Send an Email</button>
+    </div>
+</div>
+</body>
+</html>

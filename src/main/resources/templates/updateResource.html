@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Edit resource</title>
+    <h1>Change fields of resource</h1>
+</head>
+<body>
+<form action="#" th:action="@{/updateResource/{resourceId}(resourceId=${resource.id})}" enctype="multipart/form-data"
+      th:object="${resource}" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}" required><br><br>
+
+    <input type="file" name="file" th:field="*{file}"><br><br>
+
+    <button type="submit">Save</button>
+    <button class="buttons" th:onclick="'location.href=\'' + @{/resources} + '\''">Cancel</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Emails</title>
+    <style>
+        .student-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .student-details {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            border: 1px solid #ddd;
+            padding: 5px;
+        }
+        .delete-button-container {
+            margin-left: 10px;
+        }
+
+        .buttons {
+            padding: 5px 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h2>Email List:</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Send to</th>
+        <th>Subject</th>
+        <th>Body</th>
+        <th>Send date</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="email : ${emails}">
+        <td th:text="${email.id}"></td>
+        <td th:text="${email.sendTo}"></td>
+        <td th:text="${email.subject}"></td>
+        <td th:text="${email.body}"></td>
+        <td th:text="${email.sendDate}"></td>
+        <td>
+            <form th:action="@{/deleteEmail/{emailId}(emailId=${email.id})}" method="post">
+                <button type="submit" class="buttons">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<button type="button" class="buttons" th:onclick="'location.href=\'' + @{/resources} + '\''">Return To Resources List
+</button>
+<button type="button" class="buttons" th:onclick="'location.href=\'' + @{/emailForm} + '\''">Send Email</button>
+</body>
+</html>

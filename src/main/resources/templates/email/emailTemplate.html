@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Email Notification</title>
+</head>
+<body>
+<p>Hi there!</p>
+<p>You just received an email from <span th:text="${emailFrom}"></span> having the following subject and message:</p>
+<p><strong>Subject:</strong></p>
+<p th:text="${subject}"></p>
+<p><strong>Message:</strong></p>
+<p th:text="${message}"></p><br>
+<p>Thank you!</p>
+</body>
+</html>

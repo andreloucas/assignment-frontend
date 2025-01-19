@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 1992
+    driver-class-name: org.postgresql.Driver
+  mail:
+    host: localhost
+    port: 2525
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+        debug: false
+      from: andreas1987@gmail.com

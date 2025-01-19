@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Email</title>
+</head>
+<body>
+<h1>Create Email:</h1>
+<form action="#" th:action="@{/sendEmail}" th:object="${notificationLogDto}" method="post">
+    <label for="to">Send to:</label>
+    <input type="text" id="to" th:field="*{sendTo}" required><br><br>
+
+    <label for="subject">Subject:</label>
+    <input type="text" id="subject" th:field="*{subject}" required><br><br>
+
+    <label for="body">Body:</label>
+    <textarea id="body" th:field="*{body}" required></textarea><br><br>
+
+    <button type="submit">Send</button>
+    <button type="button" class="buttons" th:onclick="'location.href=\'' + @{/emails} + '\''">Cancel</button>
+</form>
+</body>
+</html>

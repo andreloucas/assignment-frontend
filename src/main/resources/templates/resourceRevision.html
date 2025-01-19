@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Revisions</title>
+    <style>
+        .student-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .student-details {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            border: 1px solid #ddd;
+            padding: 5px;
+        }
+        .delete-button-container {
+            margin-left: 10px;
+        }
+
+        .buttons {
+            padding: 5px 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>Revisions of a Resource:</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Resource Id</th>
+        <th>Resource Name</th>
+        <th>File Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="revision : ${revisions}">
+        <td th:text="${revision.id}"></td>
+        <td th:text="${revision.resourceId}"></td>
+        <td th:text="${revision.resourceName}"></td>
+        <td th:text="${revision.fileName}"></td>
+        <td>
+    </tr>
+    </tbody>
+</table>
+<button class="buttons" th:onclick="'location.href=\'' + @{/resources} + '\''">Return to resources list</button>
+</body>
+</html>
