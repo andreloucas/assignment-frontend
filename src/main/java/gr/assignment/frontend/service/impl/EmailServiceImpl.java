@@ -17,9 +17,10 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender javaMailSender;
     private final TemplateEngine templateEngine;
     private final NotificationLogService notificationLogService;
+    private static final String emailFrom = "andreloucas1987@gmail.com";
 
     @Override
-    public void sendHtmlEmail(String emailFrom, String subject, String message, String recipient) throws MessagingException {
+    public void sendHtmlEmail(String subject, String message, String recipient) throws MessagingException {
         Context context = new Context();
         context.setVariable("emailFrom", emailFrom);
         context.setVariable("subject", subject);

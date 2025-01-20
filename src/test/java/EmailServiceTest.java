@@ -34,7 +34,6 @@ class EmailServiceTest {
 
     @Test
     void testSendHtmlEmail() throws Exception {
-        String emailFrom = "test@example.com";
         String subject = "Test Subject";
         String message = "This is a test message";
         String recipient = "recipient@example.com";
@@ -45,10 +44,10 @@ class EmailServiceTest {
         when(javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
         when(templateEngine.process(eq("email/emailTemplate"), any(Context.class))).thenReturn(htmlContent);
 
-        emailService.sendHtmlEmail(emailFrom, subject, message, recipient);
+        emailService.sendHtmlEmail(subject, message, recipient);
 
         verify(javaMailSender, times(1)).send(mimeMessage);
         verify(templateEngine, times(1)).process(eq("email/emailTemplate"), any(Context.class));
-        verify(notificationLogService, times(1)).createEmail(emailFrom, subject, message, recipient);
+        verify(notificationLogService, times(1)).createEmail("andreloucas1987@gmail.com", subject, message, recipient);
     }
 }

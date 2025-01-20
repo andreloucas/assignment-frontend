@@ -18,8 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class EmailController {
-    @Value("${spring.mail.properties.from}")
-    private final String emailFrom;
     private final EmailService emailService;
     private final NotificationLogService notificationLogService;
 
@@ -31,7 +29,7 @@ public class EmailController {
 
     @PostMapping("/sendEmail")
     public String sendEmail(@ModelAttribute("notificationLogDto") NotificationLogDto notificationLogDto) throws MessagingException {
-        emailService.sendHtmlEmail(emailFrom, notificationLogDto.getSubject(), notificationLogDto.getBody(), notificationLogDto.getSendTo());
+        emailService.sendHtmlEmail(notificationLogDto.getSubject(), notificationLogDto.getBody(), notificationLogDto.getSendTo());
         return "redirect:/emails";
     }
 
