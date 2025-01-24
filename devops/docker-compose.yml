@@ -1,0 +1,15 @@
+name: <frontend>
+services:
+  postgres:
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=1992
+    ports:
+      - 5432:5432
+    image: postgres
+  mailhog:
+    container_name: mailhog
+    ports:
+      - 8025:8025
+      - 1025:102
+    image: mailhog/mailhog

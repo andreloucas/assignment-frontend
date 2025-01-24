@@ -1,4 +1,7 @@
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
@@ -6,7 +9,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   mail:
     host: localhost
-    port: 2525
+    port: 1025
     username:
     password:
     properties:
@@ -16,4 +19,3 @@ spring:
           starttls:
             enable: false
         debug: false
-      from: andreas1987@gmail.com
