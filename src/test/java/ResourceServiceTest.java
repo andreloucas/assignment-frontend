@@ -2,7 +2,6 @@ import gr.assignment.frontend.dto.ResourceDto;
 import gr.assignment.frontend.entity.ResourceEntity;
 import gr.assignment.frontend.exceptions.NotFoundException;
 import gr.assignment.frontend.repository.ResourceRepository;
-import gr.assignment.frontend.repository.RevisionRepository;
 import gr.assignment.frontend.service.impl.ResourceServiceImpl;
 import gr.assignment.frontend.service.impl.RevisionServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -17,8 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -67,7 +65,7 @@ public class ResourceServiceTest {
         assertEquals(resource.getId(), dtos.get(0).getId());
         assertEquals(resource.getName(), dtos.get(0).getName());
         assertEquals(resource.getFileName(), dtos.get(0).getFileName());
-        assertEquals(resource.getFileData(), dtos.get(0).getFileData());
+        assertArrayEquals(resource.getFileData(), dtos.get(0).getFileData());
     }
 
     @Test

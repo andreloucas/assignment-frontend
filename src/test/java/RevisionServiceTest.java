@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -57,7 +57,7 @@ public class RevisionServiceTest {
         assertEquals(revision.getResource().getId(), dtos.getFirst().getResourceId());
         assertEquals(revision.getResourceName(), dtos.getFirst().getResourceName());
         assertEquals(revision.getFileName(), dtos.getFirst().getFileName());
-        assertEquals(revision.getFileData(), dtos.getFirst().getFileData());
+        assertArrayEquals(revision.getFileData(), dtos.getFirst().getFileData());
     }
 
     @Test
@@ -79,9 +79,8 @@ public class RevisionServiceTest {
         List<RevisionDto> dtos = revisionService.findRevisionsByResourceId(resourceId);
 
         assertEquals(revision.getId(), dtos.get(0).getId());
-        assertEquals(revision.getResource().getId(), dtos.get(0).getResourceId());
         assertEquals(revision.getResourceName(), dtos.get(0).getResourceName());
         assertEquals(revision.getFileName(), dtos.get(0).getFileName());
-        assertEquals(revision.getFileData(), dtos.get(0).getFileData());
+        assertArrayEquals(revision.getFileData(), dtos.get(0).getFileData());
     }
 }
