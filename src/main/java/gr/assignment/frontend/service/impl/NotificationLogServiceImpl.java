@@ -3,6 +3,7 @@ package gr.assignment.frontend.service.impl;
 import gr.assignment.frontend.dto.NotificationLogDto;
 import gr.assignment.frontend.entity.NotificationLogEntity;
 import gr.assignment.frontend.exceptions.NotFoundException;
+import gr.assignment.frontend.mapper.NotificationLogMapper;
 import gr.assignment.frontend.repository.NotificationLogRepository;
 import gr.assignment.frontend.service.NotificationLogService;
 import lombok.RequiredArgsConstructor;
@@ -47,14 +48,8 @@ public class NotificationLogServiceImpl implements NotificationLogService {
         return dtos;
     }
 
-    private NotificationLogDto convertToDto(NotificationLogEntity email) {
-        NotificationLogDto dto = new NotificationLogDto();
-        dto.setId(email.getId());
-        dto.setSendTo(email.getSendTo());
-        dto.setSubject(email.getSubject());
-        dto.setBody(email.getBody());
-        dto.setSendDate(email.getSendDate());
-        return dto;
+    private NotificationLogDto  convertToDto(NotificationLogEntity email) {
+        return NotificationLogMapper.INSTANCE.notificationLogToDto(email);
     }
 
 }

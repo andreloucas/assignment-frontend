@@ -4,6 +4,7 @@ import gr.assignment.frontend.dto.ResourceDto;
 import gr.assignment.frontend.entity.ResourceEntity;
 import gr.assignment.frontend.exceptions.NotFoundException;
 import gr.assignment.frontend.exceptions.ValidateErrorException;
+import gr.assignment.frontend.mapper.ResourceMapper;
 import gr.assignment.frontend.repository.ResourceRepository;
 import gr.assignment.frontend.service.ResourceService;
 import gr.assignment.frontend.service.RevisionService;
@@ -37,7 +38,7 @@ public class ResourceServiceImpl implements ResourceService {
         List<ResourceDto> dtos = new ArrayList<>();
         List<ResourceEntity> resources = resourceRepository.findAll();
         for (ResourceEntity resource : resources) {
-            dtos.add(convertResourceToDto(resource));
+            dtos.add(convertToDto(resource));
         }
         return dtos;
     }
@@ -51,7 +52,7 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public ResourceDto findById(Long resourceId) {
         ResourceEntity resource = findResourceById(resourceId);
-        return convertResourceToDto(resource);
+        return convertToDto(resource);
     }
 
     @Override
@@ -69,13 +70,8 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
 
-    private ResourceDto convertResourceToDto(ResourceEntity resource) {
-        ResourceDto dto = new ResourceDto();
-        dto.setId(resource.getId());
-        dto.setName(resource.getName());
-        dto.setFileName(resource.getFileName());
-        dto.setFileData(resource.getFileData());
-        return dto;
+    private ResourceDto convertToDto(ResourceEntity resource) {
+        return ResourceMapper.INSTANCE.resourceToDto(resource);
     }
 
     private void validateResourceDto(ResourceDto dto) {

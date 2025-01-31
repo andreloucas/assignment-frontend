@@ -3,6 +3,7 @@ package gr.assignment.frontend.service.impl;
 import gr.assignment.frontend.dto.RevisionDto;
 import gr.assignment.frontend.entity.ResourceEntity;
 import gr.assignment.frontend.entity.RevisionEntity;
+import gr.assignment.frontend.mapper.RevisionMapper;
 import gr.assignment.frontend.repository.RevisionRepository;
 import gr.assignment.frontend.service.RevisionService;
 import lombok.RequiredArgsConstructor;
@@ -48,13 +49,6 @@ public class RevisionServiceImpl implements RevisionService {
     }
 
     private RevisionDto convertToDto(RevisionEntity revision) {
-        RevisionDto dto = new RevisionDto();
-        dto.setId(revision.getId());
-        dto.setResourceId(revision.getResource().getId());
-        dto.setResourceName(revision.getResourceName());
-        dto.setFileName(revision.getFileName());
-        dto.setFileData(revision.getFileData());
-        dto.setCreatedOn(revision.getCreatedOn());
-        return dto;
+        return RevisionMapper.INSTANCE.revisionToDto(revision);
     }
 }
