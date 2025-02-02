@@ -8,6 +8,7 @@ import gr.assignment.frontend.repository.ResourceRepository;
 import gr.assignment.frontend.service.ResourceService;
 import gr.assignment.frontend.service.RevisionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -68,6 +69,15 @@ public class ResourceServiceImpl implements ResourceService {
         resourceRepository.save(resource);
     }
 
+    @Override
+    public ResponseEntity<byte[]> downloadFile(Long resourceId) {
+        ResourceEntity resource = resourceRepository.findById(resourceId)
+                .orElseThrow(NotFoundException::new);
+
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=\"" + resource.getFileName() + "\"")
+                .body(resource.getFileData());
+    }
 
     private ResourceDto convertResourceToDto(ResourceEntity resource) {
         ResourceDto dto = new ResourceDto();

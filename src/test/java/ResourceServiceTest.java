@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.IOException;
@@ -17,8 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -141,6 +141,40 @@ public class ResourceServiceTest {
 
         assertThrows(NotFoundException.class, () -> {
             resourceService.findResourceById(resourceId);
+        });
+    }
+
+    @Test
+    void testDownLoadFile(){
+        Long resourceId = 1L;
+        String fileName = "testFile";
+        byte[] fileData = "testFile".getBytes();
+
+        ResourceEntity resource = new ResourceEntity();
+        resource.setId(resourceId);
+        resource.setFileName(fileName);
+        resource.setFileData(fileData);
+
+        when(resourceRepository.findById(resourceId)).thenReturn(Optional.of(resource));
+
+        ResponseEntity<byte[]> response = resourceService.downloadFile(resourceId);
+
+        assertEquals(200,response.getStatusCodeValue());
+
+        assertTrue(response.getHeaders().containsKey("Content-Disposition"));
+        assertTrue(response.getHeaders().get("Content-Disposition").get(0).contains(fileName));
+
+        assertArrayEquals(fileData, response.getBody());
+    }
+
+    @Test
+    void downloadFile_NullField_throwsNotFoundException(){
+        Long resourceId = 1L;
+
+        when(resourceRepository.findById(resourceId)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> {
+            resourceService.downloadFile(resourceId);
         });
     }
 }

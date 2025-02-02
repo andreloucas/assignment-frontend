@@ -1,6 +1,7 @@
 package gr.assignment.frontend.service;
 
 import gr.assignment.frontend.dto.ResourceDto;
+import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,4 +19,5 @@ public interface ResourceService {
 
     void updateResource(Long resourceId, ResourceDto resourceDto) throws IOException;
 
+    ResponseEntity<byte[]> downloadFile(Long resourceId);
 }
