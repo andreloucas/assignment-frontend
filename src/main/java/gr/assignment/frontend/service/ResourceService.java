@@ -19,5 +19,5 @@ public interface ResourceService {
 
     void updateResource(Long resourceId, ResourceDto resourceDto) throws IOException;
 
-    ResponseEntity<byte[]> downloadFile(Long resourceId);
+    byte[] downloadFile(Long resourceId);
 }

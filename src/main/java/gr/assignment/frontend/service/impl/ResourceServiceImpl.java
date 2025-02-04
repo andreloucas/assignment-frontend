@@ -70,13 +70,11 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public ResponseEntity<byte[]> downloadFile(Long resourceId) {
+    public byte[] downloadFile(Long resourceId) {
         ResourceEntity resource = resourceRepository.findById(resourceId)
                 .orElseThrow(NotFoundException::new);
 
-        return ResponseEntity.ok()
-                .header("Content-Disposition", "attachment; filename=\"" + resource.getFileName() + "\"")
-                .body(resource.getFileData());
+        return resource.getFileData();
     }
 
     private ResourceDto convertResourceToDto(ResourceEntity resource) {

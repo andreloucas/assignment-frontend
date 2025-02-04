@@ -86,7 +86,7 @@ public class ResourceController {
     }
 
     @GetMapping("/resource/download/{resourceId}")
-    public ResponseEntity<byte[]> downloadFile(@PathVariable Long resourceId) {
+    public byte[] downloadFile(@PathVariable Long resourceId) {
         return resourceService.downloadFile(resourceId);
     }
 }

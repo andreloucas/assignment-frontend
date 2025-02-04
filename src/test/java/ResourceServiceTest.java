@@ -157,18 +157,14 @@ public class ResourceServiceTest {
 
         when(resourceRepository.findById(resourceId)).thenReturn(Optional.of(resource));
 
-        ResponseEntity<byte[]> response = resourceService.downloadFile(resourceId);
+        byte[] result = resourceService.downloadFile(resourceId);
 
-        assertEquals(200,response.getStatusCodeValue());
-
-        assertTrue(response.getHeaders().containsKey("Content-Disposition"));
-        assertTrue(response.getHeaders().get("Content-Disposition").get(0).contains(fileName));
-
-        assertArrayEquals(fileData, response.getBody());
+        assertArrayEquals(fileData, result);
+        verify(resourceRepository, times(1)).findById(resourceId);
     }
 
     @Test
-    void downloadFile_NullField_throwsNotFoundException(){
+    void downloadFile_NotFound_throwsNotFoundException(){
         Long resourceId = 1L;
 
         when(resourceRepository.findById(resourceId)).thenReturn(Optional.empty());
