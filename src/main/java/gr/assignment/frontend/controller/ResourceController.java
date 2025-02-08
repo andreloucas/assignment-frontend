@@ -5,6 +5,9 @@ import gr.assignment.frontend.exceptions.NotFoundException;
 import gr.assignment.frontend.exceptions.ValidateErrorException;
 import gr.assignment.frontend.service.ResourceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,9 +89,20 @@ public class ResourceController {
     }
 
     @GetMapping("/resource/download/{resourceId}")
-    public byte[] downloadFile(@PathVariable Long resourceId) {
-        return resourceService.downloadFile(resourceId);
+    public ResponseEntity<byte[]> downloadFile(@PathVariable Long resourceId) {
+        byte[] fileData = resourceService.downloadFile(resourceId);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDisposition(ContentDisposition.attachment()
+                .filename("downloaded-file")
+                .build());
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(fileData);
     }
+
 }
 
 
