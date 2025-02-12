@@ -95,11 +95,9 @@ public class ResourceController {
     public ResponseEntity<byte[]> downloadFile(@PathVariable Long resourceId) {
         FileDownloadDto dto = resourceService.downloadFile(resourceId);
 
-        String encodedFileName = UriUtils.encode(dto.getFileName(), StandardCharsets.UTF_8);
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDisposition(ContentDisposition.attachment().filename(encodedFileName, StandardCharsets.UTF_8).build());
+        headers.setContentDisposition(ContentDisposition.attachment().filename(dto.getFileName(), StandardCharsets.UTF_8).build());
 
         return ResponseEntity.ok().headers(headers).body(dto.getFileData());
     }
