@@ -1,5 +1,6 @@
 package gr.assignment.frontend.controller;
 
+import gr.assignment.frontend.dto.FileDownloadDto;
 import gr.assignment.frontend.dto.ResourceDto;
 import gr.assignment.frontend.exceptions.NotFoundException;
 import gr.assignment.frontend.exceptions.ValidateErrorException;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.util.UriUtils;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -90,17 +93,15 @@ public class ResourceController {
 
     @GetMapping("/resource/download/{resourceId}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable Long resourceId) {
-        byte[] fileData = resourceService.downloadFile(resourceId);
+        FileDownloadDto dto = resourceService.downloadFile(resourceId);
+
+        String encodedFileName = UriUtils.encode(dto.getFileName(), StandardCharsets.UTF_8);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDisposition(ContentDisposition.attachment()
-                .filename("downloaded-file")
-                .build());
+        headers.setContentDisposition(ContentDisposition.attachment().filename(encodedFileName, StandardCharsets.UTF_8).build());
 
-        return ResponseEntity.ok()
-                .headers(headers)
-                .body(fileData);
+        return ResponseEntity.ok().headers(headers).body(dto.getFileData());
     }
 
 }

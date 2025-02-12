@@ -1,8 +1,8 @@
+import gr.assignment.frontend.dto.FileDownloadDto;
 import gr.assignment.frontend.dto.ResourceDto;
 import gr.assignment.frontend.entity.ResourceEntity;
 import gr.assignment.frontend.exceptions.NotFoundException;
 import gr.assignment.frontend.repository.ResourceRepository;
-import gr.assignment.frontend.repository.RevisionRepository;
 import gr.assignment.frontend.service.impl.ResourceServiceImpl;
 import gr.assignment.frontend.service.impl.RevisionServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.IOException;
@@ -18,7 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -145,26 +145,24 @@ public class ResourceServiceTest {
     }
 
     @Test
-    void testDownLoadFile(){
+    void testDownLoadFile() {
         Long resourceId = 1L;
-        String fileName = "testFile";
-        byte[] fileData = "testFile".getBytes();
-
         ResourceEntity resource = new ResourceEntity();
-        resource.setId(resourceId);
-        resource.setFileName(fileName);
-        resource.setFileData(fileData);
+        resource.setFileName("testName");
+        resource.setFileData("testName".getBytes());
 
         when(resourceRepository.findById(resourceId)).thenReturn(Optional.of(resource));
 
-        byte[] result = resourceService.downloadFile(resourceId);
+        FileDownloadDto dto = resourceService.downloadFile(resourceId);
 
-        assertArrayEquals(fileData, result);
+        assertEquals(resource.getFileName(), dto.getFileName());
+        assertEquals(resource.getFileData(), dto.getFileData());
+
         verify(resourceRepository, times(1)).findById(resourceId);
     }
 
     @Test
-    void downloadFile_NotFound_throwsNotFoundException(){
+    void downloadFile_NotFound_throwsNotFoundException() {
         Long resourceId = 1L;
 
         when(resourceRepository.findById(resourceId)).thenReturn(Optional.empty());

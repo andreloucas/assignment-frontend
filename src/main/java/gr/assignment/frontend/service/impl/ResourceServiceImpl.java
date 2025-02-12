@@ -1,5 +1,6 @@
 package gr.assignment.frontend.service.impl;
 
+import gr.assignment.frontend.dto.FileDownloadDto;
 import gr.assignment.frontend.dto.ResourceDto;
 import gr.assignment.frontend.entity.ResourceEntity;
 import gr.assignment.frontend.exceptions.NotFoundException;
@@ -8,7 +9,6 @@ import gr.assignment.frontend.repository.ResourceRepository;
 import gr.assignment.frontend.service.ResourceService;
 import gr.assignment.frontend.service.RevisionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -70,11 +70,10 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public byte[] downloadFile(Long resourceId) {
-        ResourceEntity resource = resourceRepository.findById(resourceId)
-                .orElseThrow(NotFoundException::new);
+    public FileDownloadDto downloadFile(Long resourceId) {
+        ResourceEntity resource = resourceRepository.findById(resourceId).orElseThrow(NotFoundException::new);
 
-        return resource.getFileData();
+        return new FileDownloadDto(resource.getFileName(), resource.getFileData());
     }
 
     private ResourceDto convertResourceToDto(ResourceEntity resource) {
