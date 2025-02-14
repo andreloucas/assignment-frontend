@@ -82,6 +82,6 @@ public class NotificationLogServiceTest {
         assertThrows(NotFoundException.class, () -> {
             emailLogService.deleteEmail(emailId);
         });
-        verify(notificationLogRepository,never()).delete(any(NotificationLogEntity.class));
+        verify(notificationLogRepository, never()).delete(any(NotificationLogEntity.class));
     }
 }

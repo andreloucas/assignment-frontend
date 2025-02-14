@@ -1,8 +1,8 @@
+import gr.assignment.frontend.dto.FileDownloadDto;
 import gr.assignment.frontend.dto.ResourceDto;
 import gr.assignment.frontend.entity.ResourceEntity;
 import gr.assignment.frontend.exceptions.NotFoundException;
 import gr.assignment.frontend.repository.ResourceRepository;
-import gr.assignment.frontend.repository.RevisionRepository;
 import gr.assignment.frontend.service.impl.ResourceServiceImpl;
 import gr.assignment.frontend.service.impl.RevisionServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -141,6 +141,34 @@ public class ResourceServiceTest {
 
         assertThrows(NotFoundException.class, () -> {
             resourceService.findResourceById(resourceId);
+        });
+    }
+
+    @Test
+    void testDownLoadFile() {
+        Long resourceId = 1L;
+        ResourceEntity resource = new ResourceEntity();
+        resource.setFileName("testName");
+        resource.setFileData("testName".getBytes());
+
+        when(resourceRepository.findById(resourceId)).thenReturn(Optional.of(resource));
+
+        FileDownloadDto dto = resourceService.downloadFile(resourceId);
+
+        assertEquals(resource.getFileName(), dto.getFileName());
+        assertEquals(resource.getFileData(), dto.getFileData());
+
+        verify(resourceRepository, times(1)).findById(resourceId);
+    }
+
+    @Test
+    void downloadFile_NotFound_throwsNotFoundException() {
+        Long resourceId = 1L;
+
+        when(resourceRepository.findById(resourceId)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> {
+            resourceService.downloadFile(resourceId);
         });
     }
 }

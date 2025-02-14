@@ -5,7 +5,6 @@ import gr.assignment.frontend.service.EmailService;
 import gr.assignment.frontend.service.NotificationLogService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

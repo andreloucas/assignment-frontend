@@ -70,7 +70,11 @@
             </button>
             <button class="buttons"
                     th:onclick="'location.href=\'' + @{/revisions/resource/{resourceId}(resourceId=${resource.id})} + '\''">
-                Revision of resource
+                Revisions of resource
+            </button>
+            <button class="buttons"
+                    th:onclick="'location.href=\'' + @{/resource/download/{resourceId}(resourceId=${resource.id})} + '\''">
+                Download file
             </button>
 </table>
 <button class="buttons" th:onclick="'location.href=\'' + @{/resource} + '\''">Create new resource</button>

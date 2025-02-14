@@ -1,18 +1,25 @@
 package gr.assignment.frontend.controller;
 
+import gr.assignment.frontend.dto.FileDownloadDto;
 import gr.assignment.frontend.dto.ResourceDto;
 import gr.assignment.frontend.exceptions.NotFoundException;
 import gr.assignment.frontend.exceptions.ValidateErrorException;
 import gr.assignment.frontend.service.ResourceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.util.UriUtils;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -83,6 +90,18 @@ public class ResourceController {
             throw new RuntimeException(e);
         }
     }
+
+    @GetMapping("/resource/download/{resourceId}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable Long resourceId) {
+        FileDownloadDto dto = resourceService.downloadFile(resourceId);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDisposition(ContentDisposition.attachment().filename(dto.getFileName(), StandardCharsets.UTF_8).build());
+
+        return ResponseEntity.ok().headers(headers).body(dto.getFileData());
+    }
+
 }
 
 

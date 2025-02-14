@@ -1,5 +1,6 @@
 package gr.assignment.frontend.service.impl;
 
+import gr.assignment.frontend.dto.FileDownloadDto;
 import gr.assignment.frontend.dto.ResourceDto;
 import gr.assignment.frontend.entity.ResourceEntity;
 import gr.assignment.frontend.exceptions.NotFoundException;
@@ -68,6 +69,12 @@ public class ResourceServiceImpl implements ResourceService {
         resourceRepository.save(resource);
     }
 
+    @Override
+    public FileDownloadDto downloadFile(Long resourceId) {
+        ResourceEntity resource = resourceRepository.findById(resourceId).orElseThrow(NotFoundException::new);
+
+        return new FileDownloadDto(resource.getFileName(), resource.getFileData());
+    }
 
     private ResourceDto convertResourceToDto(ResourceEntity resource) {
         ResourceDto dto = new ResourceDto();
